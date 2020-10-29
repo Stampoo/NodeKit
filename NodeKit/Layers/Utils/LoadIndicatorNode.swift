@@ -14,10 +14,13 @@ import Dispatch
 private enum LoadIndicatableNodeStatic {
     static var requestConter: Int = 0 {
         didSet {
-            #if canImport(UIKit)
-            DispatchQueue.main.async {
-                UIApplication.shared.isNetworkActivityIndicatorVisible = requestConter != 0
-            }
+            #if os(tvOS)
+            #else
+                #if canImport(UIKit)
+                DispatchQueue.main.async {
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = requestConter != 0
+                }
+                #endif
             #endif
         }
     }
